@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+
+    <title>Creative Imaging</title>
+    <!--<link rel="stylesheet" href="main.css">-->
+</head>
+<style>
+
+
+
+</style>
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#myimage')
+                    .attr('src', e.target.result)
+
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function switchPic(pic){
+        pic.src = "img.png"
+    }
+
+    function getStyle()
+    {
+        try{
+            //var d = document.getElementByID("ddstyles").value;
+            //const s = d.options[d.selectedIndex].text;
+            //document.getElementById("testStyle").innerHTML = "New Text";
+
+            //get style image value
+            var value = document.getElementById('ddstyles').value;
+            document.getElementById("testStyle").innerHTML = value;
+            updateImage(value);
+
+        } catch(err){
+            window.alert("can't get style id")
+        }
+    }
+    function updateImage(val){
+        try{
+            //update image shown id='styleimage'
+            var imagesrc = "";
+
+            if(val == "vg-sn"){imagesrc = "images/vangoghstarry.jpg";}
+            if(val == "p-ww"){imagesrc = "images/picassoweeping.jpg";}
+            if(val == 'dv-ml'){imagesrc = "images/monalisa.jpg";}
+            if(val == 'm-w'){imagesrc = "images/monetwisteria.jpg";}
+
+            document.getElementById("styleimage").src = imagesrc;
+        } catch(err) {
+            window.alert("can't update style image")
+        }
+
+    }
+
+
+    function hideFinal() {
+
+        document.getElementById("newimagesection").style.display = "none";
+        //object.style.visibility = "visible|hidden|collapse|initial|inherit"
+        //object.style.display =
+    }
+    function showFinal() {
+        document.getElementById("newimagesection").style.display = "block";
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    }
+
+    function pytfStyleTransfer() {
+        try {
+        var contentpath = document.getElementById("myimage").src;
+        var stylepath = document.getElementById("myimage").src;
+        } catch(err) {window.alert("can't get content and style path");}
+
+        //
+        //
+        //
+        //
+        //
+        //          tensorflow python code here
+        //
+        //
+        //
+        //
+        //
+
+        //get new image path
+        var newimgpath = "images/newyorkpicasso.jpg";
+
+
+        try{
+            document.getElementById("newimage").src = newimgpath; //update new image
+        } catch(err) {window.alert("can't update new image");}
+
+        showFinal(); //display completed image
+    }
+
+</script>
+<body onload="hideFinal()">
+    <div id="fullheading">
+        <div id="header">
+                <h1 class="header" id="title">Creative Imaging</h1>
+        </div>
+
+
+
+        <div id="menu">
+            <a href="main.html" class="menuopts" id="home">Home</a></span>
+            <a href="style.html" class="menuopts" id="style">Image</a></span>
+            <a href="gallery.html" class="menuopts" id="gallery">Gallery</a></span>
+        </div>
+    </div>
+
+    <div id="push"></div>
+
+
+    <div id="main">
+
+        <div id="newimagesection">
+            <br>
+            <h2>STYLED IMAGE</h2>
+            <img id="newimage" src="images/eiffelvangogh.jpg">
+        </div>
+
+
+        <!--<form action="/action_page.php">-->
+
+            <div id="chooseimagessection">
+                <br>
+                <div id="choosemyimagesection">
+                    <h2>UPLOAD AN IMAGE</h2>
+                    <input type="file" name="pic" accept="image/*" onchange="readURL(this);">
+                    <br><br>
+                    <img id="myimage" src="images/image-placeholder.jpg" alt="your image" width="100px"/>
+                </div>
+
+                <br><br>
+
+                <div id="choosestylesection">
+                    <h2>CHOOSE A STYLE</h2>
+
+                    <select id="ddstyles" name="value" onchange="getStyle()">
+                        <option value="vg-sn" selected="selected">Van Gogh's Starry Night</option> /*default value*/
+                        <option value="p-ww">Picasso's Weeping Woman</option>
+                        <option value="dv-ml">da Vinci's Mona Lisa</option>
+                        <option value="m-w">Monet's Wisteria</option>
+                    </select>
+                    <br>
+                    <p id="testStyle">Testing</p>
+                    <img id="styleimage" src="images/vangoghstarry.jpg" alt="style image"/>
+
+                </div>
+                <br>
+
+            </div>
+
+        <button id="btsubmit" onclick="pytfStyleTransfer()"><span>Style Your Image</span></button>
+            <!--this button will call python tensorflow code-->
+            <br><br><br><br><br>
+        <!--</form>-->
+
+
+    </div>
+
+    <div id="footer">
+
+    </div>
+
+</body>
+</html>

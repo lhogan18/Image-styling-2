@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+
+    <title>Creative Imaging</title>
+    <!--<link rel="stylesheet" href="main.css">-->
+</head>
+<style>
+    body{ max-width:1600px; margin:auto; }
+    #fullheading{
+        position:fixed;
+        width:100%;
+
+    }
+    #header{
+        background-image: linear-gradient(to bottom, violet, lightskyblue);
+        padding: 10px;
+        text-align:center;
+        width:100%;
+    }
+    a{
+        text-decoration: none;
+    }
+    #push {height:140px;}
+    #menu{
+        background-image: url("images/background.jpg");
+        background-size: cover;
+        padding: 15px;
+        text-align:center;
+    }
+    .menuopts{
+        padding:10px;
+        margin:0px;
+        background-color: lightskyblue;
+        background-image: linear-gradient(to bottom, white, lightskyblue);
+        border-radius: 4px;
+
+    }
+    .menuopts:active{
+        background-color: darkblue;
+        border: black 5px;
+    }
+    .menuopts:hover{
+        background-image: linear-gradient(to top, white, lightskyblue)
+    }
+    #main{
+
+        min-height:400px;
+    }
+    #chooseimages{
+        background-color: lavender;
+        width: 100%;
+        text-align:center;
+    }
+    #choosemyimage{
+        background-color: lightskyblue;
+        height: 200px;
+        width: 200px;
+    }
+    #myimage{
+        text-align: center;
+    }
+    #choosestyleimage{
+        background-color: lightgreen;
+        height: 200px;
+        width: 200px;
+    }
+    #footer{
+        background-color: black;
+        height:50px;
+        color:white;
+        text-align: center;
+        position:-ms-device-fixed;
+        left: 0;
+        bottom: 0;
+        width:100%;
+        opacity: 50%;
+    }
+</style>
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#myimage')
+                    .attr('src', e.target.result)
+                    .width(150);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+<body>
+    <div id="fullheading">
+        <div id="header">
+                <h1 class="header" id="title">Creative Imaging</h1>
+        </div>
+
+        <div id="menu">
+            <a href="main.html" class="menuopts" id="home">Home</a></span>
+            <a href="style.html" class="menuopts" id="style">Image</a></span>
+            <a href="gallery.html" class="menuopts" id="gallery">Gallery</a></span>
+        </div>
+    </div>
+
+    <div id="push"></div>
+
+    <div id="main">
+
+
+
+    </div>
+
+
+    <div id="footer">
+
+    </div>
+
+</body>
+</html>

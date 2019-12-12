@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styleCreate.css') }}">
+    <Title>Creative Imaging</Title>
+{% endblock %}
+
+{% block scripts %}
+    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    <script>
+        function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#myimage')
+                    .attr('src', e.target.result)
+
+            };
+
+            reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function switchPic(pic){
+            pic.src = "img.png"
+        }
+
+        function getStyle()
+        {
+            try{
+                //var d = document.getElementByID("ddstyles").value;
+                //const s = d.options[d.selectedIndex].text;
+                //document.getElementById("testStyle").innerHTML = "New Text";
+
+                //get style image value
+                var value = document.getElementById('ddstyles').value;
+                //document.getElementById("testStyle").innerHTML = value;
+                updateImage(value);
+
+            } catch(err){
+                window.alert("can't get style id")
+            }
+        }
+        function updateImage(val){
+            try{
+                //update image shown id='styleimage'
+                var imagesrc = "";
+
+                if(val == "vg-sn"){imagesrc = "{{ url_for('static', filename='images/vangogh.jpg') }}";}
+                if(val == "p-ww"){imagesrc = "{{ url_for('static', filename='images/picasso.jpg') }}";}
+                if(val == 'dv-ml'){imagesrc = "{{ url_for('static', filename='images/monalisa.jpg') }}";}
+                if(val == 'm-w'){imagesrc = "{{ url_for('static', filename='images/monetwisteria.jpg') }}";}
+
+                document.getElementById("styleimage").src = imagesrc;
+            } catch(err) {
+                window.alert("can't update style image")
+            }
+
+        }
+        function hideFinal() {
+
+            document.getElementById("newimagesection").style.display = "none";
+            //object.style.visibility = "visible|hidden|collapse|initial|inherit"
+            //object.style.display =
+        }
+        function showFinal() {
+            document.getElementById("newimagesection").style.display = "block";
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        }
+        function pytfStyleTransfer() {
+            $.ajax({
+                type: "POST",
+                url: "/create/",
+                dataType: "json",
+                data: JSON.stringify
+                }).done(function(data) {
+                    try{
+                        document.getElementById("newimage").src = ''+data+'';
+                    } catch(err) {window.alert("can't update new image");}
+                    showFinal(); //display completed image
+                });
+        }
+
+    </script>
+{% endblock %}
+
+{% block content %}
+    <body onload="hideFinal()">
+        <div class="header">
+            <h1>Creative Imaging</h1>
+        </div>
+        <div class="navigation">
+            <div class="menu">
+                <ul>
+                    <li>
+                        <a href="{{ url_for('index') }}">Home</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('create') }}">Create Image</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('gallery') }}">Gallery</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+        <div id="main">
+
+            <div id="imageSection">
+                <br>
+                <h2>STYLED IMAGE</h2>
+                <div id="status"><img id="newimage"></div>
+            </div>
+
+                <div id="chooseimagessection">
+                    <br>
+                    <div id="choosemyimagesection">
+                        <h2>UPLOAD AN IMAGE</h2>
+                        <input type="file" name="pic" accept="image/*" onchange="readURL(this);">
+                        <br><br>
+                        <img id="myimage" alt="your image" width="100px"/>
+                    </div>
+
+                    <br><br>
+
+                    <div id="choosestylesection">
+                        <h2>CHOOSE A STYLE</h2>
+
+                        <select id="ddstyles" name="value" onchange="getStyle()">
+                            <option value="vg-sn" selected="selected">Van Gogh's Starry Night</option> /*default value*/
+                            <option value="p-ww">Picasso's Weeping Woman</option>
+                            <option value="dv-ml">da Vinci's Mona Lisa</option>
+                            <option value="m-w">Monet's Wisteria</option>
+                        </select>
+                        <br>
+                        <!--<p id="testStyle">Testing</p>-->
+                        <img id="styleimage" src="{{ url_for('static', filename='images/Starry-Night.jpg') }}" alt="style image"/>
+
+                    </div>
+                    <br>
+
+                </div>
+            <button id="btsubmit" onclick="pytfStyleTransfer()"><span>Style Your Image</span></button>
+            </form>
+                <br><br><br><br><br>
+        </div>
+
+        <div id="footer">
+
+        </div>
+    </body>
+{% endblock %}
